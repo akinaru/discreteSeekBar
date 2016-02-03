@@ -44,8 +44,9 @@ import android.view.animation.Interpolator;
  * @hide
  */
 public class MarkerDrawable extends StateDrawable implements Animatable {
+
     private static final long FRAME_DURATION = 1000 / 60;
-    private static final int ANIMATION_DURATION = 250;
+    private static int ANIMATION_DURATION = 250;
 
     private float mCurrentScale = 0f;
     private Interpolator mInterpolator;
@@ -151,6 +152,7 @@ public class MarkerDrawable extends StateDrawable implements Animatable {
     public void animateToPressed() {
         unscheduleSelf(mUpdater);
         mReverse = false;
+
         if (mCurrentScale < 1) {
             mRunning = true;
             mAnimationInitialValue = mCurrentScale;
@@ -161,6 +163,10 @@ public class MarkerDrawable extends StateDrawable implements Animatable {
         } else {
             notifyFinishedToListener();
         }
+    }
+
+    public void setDuration(int duration) {
+        ANIMATION_DURATION = duration;
     }
 
     public void animateToNormal() {

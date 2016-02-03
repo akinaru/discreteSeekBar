@@ -112,6 +112,35 @@ public class PopupIndicator {
         }
     }
 
+    /**
+     * Show popup indicator
+     *
+     * @param duration    animation duration for showing bublle action
+     * @param parent
+     * @param touchBounds
+     */
+    public void showIndicator(int duration, View parent, Rect touchBounds) {
+        mPopupView.mMarker.setDuration(duration);
+
+        if (isShowing()) {
+            mPopupView.mMarker.animateOpen();
+            return;
+        }
+
+        IBinder windowToken = parent.getWindowToken();
+
+        if (windowToken != null) {
+            WindowManager.LayoutParams p = createPopupLayout(windowToken);
+
+            p.gravity = Gravity.TOP | GravityCompat.START;
+            updateLayoutParamsForPosiion(parent, p, touchBounds.bottom);
+            mShowing = true;
+
+            translateViewIntoPosition(touchBounds.centerX());
+            invokePopup(p);
+        }
+    }
+
     public void move(int x) {
         if (!isShowing()) {
             return;
@@ -127,6 +156,16 @@ public class PopupIndicator {
      * This will start the closing animation of the Marker and call onClosingComplete when finished
      */
     public void dismiss() {
+        mPopupView.mMarker.animateClose();
+    }
+
+    /**
+     * This will start the closing animation of the Marker and call onClosingComplete when finished
+     *
+     * @param duration animation duration for dismiss bublle action
+     */
+    public void dismiss(int duration) {
+        mPopupView.mMarker.setDuration(duration);
         mPopupView.mMarker.animateClose();
     }
 

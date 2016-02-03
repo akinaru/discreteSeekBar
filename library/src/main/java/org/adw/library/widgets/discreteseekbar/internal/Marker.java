@@ -61,7 +61,7 @@ public class Marker extends ViewGroup implements MarkerDrawable.MarkerAnimationL
         super(context, attrs, defStyleAttr);
         //as we're reading the parent DiscreteSeekBar attributes, it may wrongly set this view's visibility.
         setVisibility(View.VISIBLE);
-        
+
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DiscreteSeekBar,
                 R.attr.discreteSeekBarStyle, R.style.Widget_DiscreteSeekBar);
@@ -121,6 +121,16 @@ public class Marker extends ViewGroup implements MarkerDrawable.MarkerAnimationL
     protected void dispatchDraw(Canvas canvas) {
         mMarkerDrawable.draw(canvas);
         super.dispatchDraw(canvas);
+    }
+
+    /**
+     * Set animation duration
+     *
+     * @param duration
+     *      animation duration in milliseconds
+     */
+    public void setDuration(int duration) {
+        mMarkerDrawable.setDuration(duration);
     }
 
     @Override

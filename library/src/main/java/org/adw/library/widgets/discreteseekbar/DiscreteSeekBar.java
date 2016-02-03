@@ -981,6 +981,32 @@ public class DiscreteSeekBar extends View {
         }
     }
 
+    /**
+     * Api for hiding floater popup with specified animationduration
+     *
+     * @param duration animation duration in milliseconds
+     */
+    public void hideFloater(int duration) {
+        removeCallbacks(mShowIndicatorRunnable);
+        //if (!isInEditMode()) {
+        mIndicator.dismiss(duration);
+        notifyBubble(false);
+        //}
+    }
+
+    /**
+     * Api for showing floater popup with specified animationduration
+     *
+     * @param duration animation duration in milliseconds
+     */
+    public void showFloater(int duration) {
+        if (!isInEditMode()) {
+            mThumb.animateToNormal();
+            mIndicator.showIndicator(duration, this, mThumb.getBounds());
+            notifyBubble(true);
+        }
+    }
+
     private MarkerDrawable.MarkerAnimationListener mFloaterListener = new MarkerDrawable.MarkerAnimationListener() {
         @Override
         public void onClosingComplete() {
