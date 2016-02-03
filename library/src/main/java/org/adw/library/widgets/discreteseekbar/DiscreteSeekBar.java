@@ -164,6 +164,7 @@ public class DiscreteSeekBar extends View {
     private int mAnimationTarget;
     private float mDownX;
     private float mTouchSlop;
+    private boolean mKeepShowingPopup = false;
 
     public DiscreteSeekBar(Context context) {
         this(context, null);
@@ -769,12 +770,23 @@ public class DiscreteSeekBar extends View {
         return mIsDragging;
     }
 
+    /**
+     * define if popup is not hiding when ACTION_UP is triggered
+     *
+     * @param state true for always displaying popup bubble / false for hiding (default)
+     */
+    public void keepShowingPopup(boolean state) {
+        mKeepShowingPopup = state;
+    }
+
     private void stopDragging() {
         if (mPublicChangeListener != null) {
             mPublicChangeListener.onStopTrackingTouch(this);
         }
-        mIsDragging = false;
-        setPressed(false);
+        if (!mKeepShowingPopup) {
+            mIsDragging = false;
+            setPressed(false);
+        }
     }
 
     @Override
